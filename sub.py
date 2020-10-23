@@ -1,10 +1,21 @@
-import os, sys
+import os
 
-sys.setrecursionlimit(10000)
+path = './'
 
-txt = "subd/"+"/".join([*map(str, [*range(5000)])])
-os.makedirs(txt)
+def html_body(idx):
+    return f'<body>Hello World ({idx})</body>'
 
-with open(txt+'/index.html', 'w') as fp:
-    fp.write("<body>Hello World</body>")
+for i in range(950):
+    path += f'{i}/'
+    os.mkdir(path)
+    try:
+        with open(path+'index.html', 'w') as fp:
+            fp.write(html_body(i))
+    except OSError as exc:
+        if exc.errno == 36:
+            break
+        else:
+            raise
 
+
+print(path)
